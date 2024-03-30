@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
+import { ResultPopUp } from "./ResultPopUp";
+import { useNavigate } from "react-router-dom";
 
-export function Board({ firstMove, position, onPieceDrop ,switchTimer }) {
+export function Board({ firstMove, position, onPieceDrop, switchTimer }) {
     const [game, setGame] = useState(new Chess());
     const [turn, setTurn] = useState("white")
-
+    const [isMatchOver, setIsMatachOver] = useState(false)
+    const navigate = useNavigate()
     useEffect(() => {
         if (firstMove == "black") {
             setTurn("black")
@@ -33,16 +36,17 @@ export function Board({ firstMove, position, onPieceDrop ,switchTimer }) {
         gameCopy.move(move);
         setGame(gameCopy);
         changeTurns()
-        switchTimer()   
+        switchTimer()
     }
-
-    
 
     function makeRandomMove() {
         const possibleMoves = game.moves();
         console.log(possibleMoves);
-        if (game.isGameOver() || game.isDraw() || possibleMoves.length === 0)
+        if (game.isGameOver() || game.isDraw() || possibleMoves.length === 0) {
+            setIsMatachOver(true)
+            navigate("/result")
             return; // exit if the game is over
+        }
         const randomIndex = Math.floor(Math.random() * possibleMoves.length);
         makeMove(possibleMoves[randomIndex]);
     }
@@ -53,11 +57,12 @@ export function Board({ firstMove, position, onPieceDrop ,switchTimer }) {
             to: endSquare,
         });
     }
-
+    console.log(isMatchOver);
     return (
-        <div>
-            <Chessboard  position={game.fen()} onPieceDrop={onDrop} snapToCursor={false} id="Board" />
-        </div>
+        <>
+            {isMatchOver ==true ? <ResultPopUp /> : null}
+            <Chessboard position={game.fen()} onPieceDrop={onDrop} snapToCursor={false} id="Board" />
+        </>
 
     );
 }
