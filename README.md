@@ -2,7 +2,7 @@
 
 ## Description
 
-`React-chess` is a private React application for playing chess. It utilizes the `chess.js` library for chess logic and `react-chessboard` for rendering the chessboard interface.
+`React-chess` is a React application for playing chess. It utilizes the `chess.js` library for chess logic and `react-chessboard` for rendering the chessboard interface.
 
 ## Installation
 
