@@ -6,7 +6,11 @@
 
 ## Installation
 
-This project is not publicly available for installation.
+This project is publicly available for installation.
+
+- Fork the Repository and use
+
+`npm install` to install the required dependencies.
 
 ## Usage
 
